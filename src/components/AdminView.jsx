@@ -11,13 +11,22 @@ const AdminView= ({
   updateExamLink,
   loggedInUser,
   allCredentials,
-  updateCredentials
+  updateCredentials, 
+  
 }) => {
 
   console.log("loggedInUser in adminview ", loggedInUser);
+  let centerCategory = [];  
+  allCredentials.map((e) => {
+    if(e.role !== "admin"){
+      centerCategory.push(e._id); 
+    } 
+  } 
+  ); 
+  console.log("getting centers in admin view", centerCategory); 
   return (
     <div className="space-y-10">
-      <AddLinkForm addExamLink={addExamLink} />
+      <AddLinkForm addExamLink={addExamLink} centerCategory={centerCategory} />
       
       <div>
         <h2 className="text-2xl font-bold text-slate-100 mb-4 border-b-2 border-slate-700 pb-2">Manage Links</h2>
@@ -31,6 +40,7 @@ const AdminView= ({
                   exam={exam} 
                   removeExamLink={removeExamLink} 
                   updateExamLink={updateExamLink}
+                  centerCategory={centerCategory}
                 />
               ))
             ) : (
