@@ -110,6 +110,7 @@ function App() {
     try {
       // const newLink = await api.addLink(newLinkData);
       const { name, url, center } = newLinkData;
+      console.log("new link data ", newLinkData)
       const newLink = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/links/create`, {
         examName: name,
         examCenter: center,
@@ -172,10 +173,10 @@ function App() {
   }
 
   if (!isAuthenticated || !loggedInUser) {
-    
     return <Login onLogin={handleLogin} error={loginError} />;
   }
-
+  const centerCategory = [];  
+  credentials?.map((e) => e.role !== "admin" && centerCategory.push(e._id)); 
   return (
     <div className="min-h-screen bg-slate-900 font-sans ">
       <Header
@@ -186,10 +187,10 @@ function App() {
         onToggleAIAssistant={() => setIsAIAssistantOpen(prev => !prev)}
       />
 
-
+    
       <main className="container mx-auto px-4 py-8">
         {view === 'user' ? (
-          <UserView examLinks={examLinks} loggedInUser={loggedInUser} />
+          <UserView examLinks={examLinks} loggedInUser={loggedInUser} centerCategory={centerCategory} />
         ) : (
           <AdminView
             examLinks={examLinks}

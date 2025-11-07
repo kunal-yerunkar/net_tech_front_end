@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { TrashIcon, EditIcon, CheckIcon, XIcon } from './icons';
 
 
-const AdminLinkRow = ({ exam, removeExamLink, updateExamLink }) => {
+const AdminLinkRow = ({ exam, removeExamLink, updateExamLink, centerCategory }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(exam?.examName);
   const [editedUrl, setEditedUrl] = useState( exam?.examUrl);
@@ -50,8 +50,8 @@ const AdminLinkRow = ({ exam, removeExamLink, updateExamLink }) => {
             onChange={(e) => setEditedCenter(e.target.value)}
             className="block w-full bg-slate-600 border border-slate-500 rounded-md shadow-sm py-1 px-2 text-white focus:outline-none focus:ring-sky-500 focus:border-sky-500 text-sm"
           >
-            <option value="centerA">Job Fair</option>
-            <option value="centerB">Technical</option>
+            <option value={centerCategory[0]}>Job Fair</option>
+            <option value={centerCategory[1]}>Technical</option>
           </select>
         </div>
         <div className="flex items-center space-x-1">
@@ -75,8 +75,8 @@ const AdminLinkRow = ({ exam, removeExamLink, updateExamLink }) => {
         <p className="text-xs text-slate-400 truncate">{ exam?.examUrl}</p>
       </div>
       <div className="flex-[0.5] text-center">
-        <span className={`text-xs font-medium px-2 py-1 rounded-full ${ exam?.examCenter === 'centerA' ? 'bg-blue-900 text-blue-300' : 'bg-purple-900 text-purple-300'}`}>
-          { exam?.examCenter === 'centerA' ? 'Job Fair' : 'Technical'}
+        <span className={`text-xs font-medium px-2 py-1 rounded-full ${ exam?.examCenter._id === centerCategory[0] ? 'bg-blue-900 text-blue-300' : exam?.examCenter._id === centerCategory[1] ?  'bg-purple-900 text-purple-300' : "bg-gray-500 bg-gray-100" }`}>
+          { exam?.examCenter._id === centerCategory[0] ? 'Job Fair' : exam?.examCenter._id == centerCategory[1] ? "Technical": "N/A"}
         </span>
       </div>
       <div className="flex items-center space-x-1">

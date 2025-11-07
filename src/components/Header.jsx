@@ -12,7 +12,8 @@ const Header = ({ currentView, setView, onLogout, loggedInUser, onToggleAIAssist
   return (
     <header className="bg-slate-800 shadow-lg sticky top-0 z-20">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-xl md:text-2xl font-bold text-sky-400">
+        <h1 className="text-xl md:text-2xl font-bold text-sky-400 flex gap-5 items-center">
+        <img src="/nettech_logo.webp" alt="logo" className='w-30 object-cover h-auto rounded-xl shadow-xl' />
           NetTech India Exam Hub
         </h1>
         <div className="flex items-center space-x-2">

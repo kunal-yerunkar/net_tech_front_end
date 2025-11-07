@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-const AddLinkForm= ({ addExamLink }) => {
+const AddLinkForm= ({ addExamLink, centerCategory}) => {
+  console.log("getting center category in addlinkform",centerCategory)
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
-  const [center, setCenter] = useState('centerA');
+  const [center, setCenter] = useState("");
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
@@ -19,12 +20,13 @@ const AddLinkForm= ({ addExamLink }) => {
       setError('Please enter a valid URL.');
       return;
     }
-
+    console.log("getting vals before add examlink ", { name, url, center })
     addExamLink({ name, url, center });
-    setName('');
-    setUrl('');
-    setCenter('centerA');
-    setError('');
+
+    // setName('');
+    // setUrl('');
+    // setCenter('');
+    // setError('');
   };
 
   return (
@@ -55,8 +57,8 @@ const AddLinkForm= ({ addExamLink }) => {
               onChange={(e) => setCenter(e.target.value)}
               className="mt-1 block w-full bg-slate-700 border border-slate-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
             >
-              <option value="centerA">Job Fair</option>
-              <option value="centerB">Technical</option>
+              <option value={centerCategory[0]}>Job Fair</option>
+              <option value={centerCategory[1]}>Technical</option>
             </select>
           </div>
         </div>
@@ -86,5 +88,4 @@ const AddLinkForm= ({ addExamLink }) => {
     </div>
   );
 };
-
 export default AddLinkForm;

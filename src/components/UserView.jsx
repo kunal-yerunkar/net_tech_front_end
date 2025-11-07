@@ -2,11 +2,12 @@ import React from 'react';
 // import { ExamLink, Credentials } from '../types';
 import ExamCard from './ExamCard';
 
-const UserView= ({ examLinks, loggedInUser }) => {
+const UserView= ({ examLinks, loggedInUser, centerCategory }) => {
+  console.log("loggedInUser in userview", loggedInUser)
   // Admin View: Separate links by center
   if (loggedInUser.role === 'admin'){
-    const jobFairLinks = examLinks.filter(link => link.examCenter === 'centerA');
-    const technicalLinks = examLinks.filter(link => link.examCenter === 'centerB');
+    const jobFairLinks = examLinks.filter(link => link.examCenter._id === centerCategory[0]);
+    const technicalLinks = examLinks.filter(link => link.examCenter._id === centerCategory[1]);
     console.log("filtered lnks ",jobFairLinks, technicalLinks)
     return (
       <div>
@@ -38,15 +39,15 @@ const UserView= ({ examLinks, loggedInUser }) => {
   }
 
   // Regular User View
-  const linksToShow = examLinks.filter(link => link.examCenter === loggedInUser.username);
+  const linksToShow = examLinks.filter(link => link.examCenter._id === loggedInUser.id);
   // const linksToShow = examLinks; 
   const getTitle = () => {
-    if (loggedInUser.username === 'centerA') {
-      return 'Job Fair Technical Exams';
-    }
-    if (loggedInUser.username === 'centerB') {
-        return 'Technical Exams';
-    }
+    // if (loggedInUser.username === 'centerA') {
+    //   return 'Job Fair Technical Exams';
+    // }
+    // if (loggedInUser.username === 'centerB') {
+    //     return 'Technical Exams';
+    // }
     return `Available Exams for ${loggedInUser.username}`;
   }
 
