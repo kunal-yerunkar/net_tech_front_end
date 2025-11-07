@@ -31,13 +31,13 @@ function App() {
         const [links, creds] = await Promise.all([
           // api.getLinks(),
           // api.getCredentials(),
-          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/links/all`), 
-                    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/all`), 
-                   
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/links/all`),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/all`),
+
 
         ]);
-        console.log("links", links); 
-        console.log("all users data in app.js", creds.data); 
+        console.log("links", links);
+        console.log("all users data in app.js", creds.data);
         setExamLinks(links.data);
         setCredentials(creds.data);
 
@@ -81,22 +81,22 @@ function App() {
   };
 
   // const updateCredentials = async (usernameToUpdate: string, newCredentials: Omit<Credentials, 'role'>) => {
-  const updateCredentials = async ({userId, userName, password}) => {
+  const updateCredentials = async ({ userId, userName, password }) => {
     try {
       // const updatedCred = await api.updateCredential(usernameToUpdate, newCredentials);
       const updatedCred = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/${userId}  `, {
-        username : userName, 
-        password : password 
-      })  
-      console.log("update credentials in mangecrededntial component ", updateCredentials); 
+        username: userName,
+        password: password
+      })
+      console.log("update credentials in mangecrededntial component ", updateCredentials);
       // setCredentials(prevCreds =>
       //   prevCreds.map(cred =>
       //     cred.username === usernameToUpdate ? { ...cred, ...updatedCred } : cred
       //   )
       // );
-       setCredentials(prevCreds =>
+      setCredentials(prevCreds =>
         prevCreds.map(cred =>
-          cred.username === userName ? {...updatedCred?.data?.user } : cred
+          cred.username === userName ? { ...updatedCred?.data?.user } : cred
         )
       );
       alert('Credentials updated successfully!');
@@ -128,14 +128,14 @@ function App() {
     try {
 
       // const updatedLink = await api.updateLink(id, updatedData);
-      const {name, url, center} = updatedData; 
+      const { name, url, center } = updatedData;
       const updatedLink = await axios.put(`${import.meta.env.VITE_BACKEND_URL || "http://localhost:4000"}/api/links/${id}`, {
         examName: name,
         examCenter: center,
         examUrl: url
       });
 
-      console.log("updated link info for id ",id, " ",  updatedLink); 
+      console.log("updated link info for id ", id, " ", updatedLink);
       console.log("prev links ", examLinks)
       setExamLinks(prevLinks =>
         prevLinks.map(link =>
@@ -151,8 +151,11 @@ function App() {
   const removeExamLink = async (id) => {
     if (window.confirm("Are you sure you want to remove this link?")) {
       try {
-        await api.deleteLink(id);
-        setExamLinks(prevLinks => prevLinks.filter(link => link.id !== id));
+        console.log('remove id is this:=', id)
+        // await api.deleteLink(id);
+        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/links/${id}`)
+        // await axios.delete(`http://localhost:4000/api/links/${id}`)
+        setExamLinks(prevLinks => prevLinks.filter(link => link._id !== id));
       } catch (err) {
         alert('Failed to remove link.');
         console.error(err);
@@ -175,8 +178,8 @@ function App() {
   if (!isAuthenticated || !loggedInUser) {
     return <Login onLogin={handleLogin} error={loginError} />;
   }
-  const centerCategory = [];  
-  credentials?.map((e) => e.role !== "admin" && centerCategory.push(e._id)); 
+  const centerCategory = [];
+  credentials?.map((e) => e.role !== "admin" && centerCategory.push(e._id));
   return (
     <div className="min-h-screen bg-slate-900 font-sans ">
       <Header
@@ -187,7 +190,7 @@ function App() {
         onToggleAIAssistant={() => setIsAIAssistantOpen(prev => !prev)}
       />
 
-    
+
       <main className="container mx-auto px-4 py-8">
         {view === 'user' ? (
           <UserView examLinks={examLinks} loggedInUser={loggedInUser} centerCategory={centerCategory} />
