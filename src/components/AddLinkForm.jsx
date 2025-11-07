@@ -4,7 +4,7 @@ const AddLinkForm= ({ addExamLink, centerCategory}) => {
   console.log("getting center category in addlinkform",centerCategory)
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
-  const [center, setCenter] = useState("");
+  const [center, setCenter] = useState(centerCategory[0]);
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
@@ -22,7 +22,6 @@ const AddLinkForm= ({ addExamLink, centerCategory}) => {
     }
     console.log("getting vals before add examlink ", { name, url, center })
     addExamLink({ name, url, center });
-
     // setName('');
     // setUrl('');
     // setCenter('');

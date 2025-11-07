@@ -75,7 +75,7 @@ const AdminLinkRow = ({ exam, removeExamLink, updateExamLink, centerCategory }) 
         <p className="text-xs text-slate-400 truncate">{ exam?.examUrl}</p>
       </div>
       <div className="flex-[0.5] text-center">
-        <span className={`text-xs font-medium px-2 py-1 rounded-full ${ exam?.examCenter._id === centerCategory[0] ? 'bg-blue-900 text-blue-300' : exam?.examCenter._id === centerCategory[1] ?  'bg-purple-900 text-purple-300' : "bg-gray-500 bg-gray-100" }`}>
+        <span className={`text-xs font-medium px-2 py-1 rounded-full ${ exam?.examCenter._id === centerCategory[0] ? 'bg-blue-900 text-blue-300' : exam?.examCenter._id === centerCategory[1] ?  'bg-purple-900 text-purple-300' : "bg-gray-500 text-gray-100" }`}>
           { exam?.examCenter._id === centerCategory[0] ? 'Job Fair' : exam?.examCenter._id == centerCategory[1] ? "Technical": "N/A"}
         </span>
       </div>
@@ -83,7 +83,7 @@ const AdminLinkRow = ({ exam, removeExamLink, updateExamLink, centerCategory }) 
         <button onClick={() => setIsEditing(true)} className={`${baseButtonClass} text-slate-400 hover:bg-sky-500/20 hover:text-sky-400 focus:ring-sky-500`} aria-label="Edit link">
             <EditIcon />
         </button>
-        <button onClick={() => removeExamLink( exam?.id)} className={`${baseButtonClass} text-slate-400 hover:bg-red-500/20 hover:text-red-400 focus:ring-red-500`} aria-label="Remove link">
+        <button onClick={() => removeExamLink( exam?._id)} className={`${baseButtonClass} text-slate-400 hover:bg-red-500/20 hover:text-red-400 focus:ring-red-500`} aria-label="Remove link">
           <TrashIcon />
         </button>
       </div>
